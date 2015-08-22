@@ -1,0 +1,107 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
+
+<!--
+`simple-navigation` contains a drawer panel and a main panel.  The drawer
+and the main panel are side-by-side with drawer on the left. The drawer will slide out to reveal an expanded version of its contents.
+
+Use the attribute `drawer` to indicate that the element is the drawer panel and
+`main` to indicate that the element is the main panel.
+
+Example:
+
+    <simple-navigation>
+      <div drawer> Drawer panel... </div>
+      <div main> Main panel... </div>
+    </simple-navigation>
+
+Styling `simple-navigation`
+
+To change the main container:
+
+    simple-navigation {
+      --simple-navigation-main-container: {
+        background-color: gray;
+      };
+    }
+
+To change the drawer container when it's in the left side:
+
+    simple-navigation {
+      --simple-navigation-left-drawer-container: {
+        background-color: white;
+      };
+    }
+-->
+
+<dom-module id="simple-navigation">
+  <link rel="import" type="css" href="simple-navigation.css">
+
+  <template>
+    <!-- activate-event is used because we don't fire 'tap' events to change selection. -->
+    <iron-selector
+        attr-for-selected="id"
+        class$="[[_computeIronSelectorClass(transition)]]"
+        activate-event=""
+        selected="[[_computeInternalSelected(selected)]]">
+
+      <div id="main">
+        <content select="[main]"></content>
+      </div>
+
+      <div id="drawer">
+        <content select="[drawer]"></content>
+      </div>
+
+    </iron-selector>
+  </template>
+</dom-module>
+
+<script>
+
+  (function() {
+
+    'use strict';
+
+    Polymer({
+
+      is: 'simple-navigation',
+      properties: {
+
+        /**
+         * The panel that is being selected. `menu` for the drawer panel and
+         * anything else for the main panel.
+         */
+        selected: {
+          reflectToAttribute: true,
+          type: String,
+        },
+
+        /**
+         * Whether the transition is enabled. Disabled to begin with until dom is ready.
+         */
+        transition: {
+          type: Boolean,
+          value: false
+        },
+
+      },
+
+      ready: function() {
+        // Avoid transition at the beginning e.g. page loads and enable
+        // transitions only after the element is rendered and ready.
+        this.transition = true;
+      },
+
+      _computeIronSelectorClass: function(transition) {
+        return transition ? 'transition' : '';
+      },
+
+      _computeInternalSelected: function(selected) {
+        return this.selected != 'menu' ? 'main' : 'drawer'
+      }
+    });
+
+  }());
+
+</script>
