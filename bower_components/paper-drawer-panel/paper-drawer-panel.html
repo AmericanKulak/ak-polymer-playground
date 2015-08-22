@@ -94,6 +94,7 @@ To change the drawer container when it's in the left side:
   <link rel="import" type="css" href="paper-drawer-panel.css">
 
   <template>
+    <!-- activate-event is used because we don't fire 'tap' events to change selection. -->
     <iron-selector
         attr-for-selected="id"
         class$="[[_computeIronSelectorClass(transition)]]"
@@ -109,6 +110,7 @@ To change the drawer container when it's in the left side:
       </div>
 
     </iron-selector>
+
   </template>
 
 </dom-module>
@@ -125,14 +127,12 @@ To change the drawer container when it's in the left side:
       properties: {
 
         /**
-         * The panel that is being selected. `drawer` for the drawer panel and
-         * `main` for the main panel.
+         * The panel that is being selected. `menu` for the drawer panel and
+         * anything else for the main panel.
          */
         selected: {
           reflectToAttribute: true,
-          notify: true,
           type: String,
-          value: null
         },
 
         /**
@@ -148,8 +148,6 @@ To change the drawer container when it's in the left side:
       ready: function() {
         // Avoid transition at the beginning e.g. page loads and enable
         // transitions only after the element is rendered and ready.
-        this.setScrollDirection('all');
-        console.log("k");
         this.transition = true;
       },
 
@@ -157,12 +155,8 @@ To change the drawer container when it's in the left side:
         return transition ? 'transition' : '';
       },
 
-      _isMainSelected: function() {
-        return this.selected != 'menu';
-      },
-
       _computeInternalSelected: function(selected) {
-        return this._isMainSelected() ? 'main' : 'drawer'
+        return this.selected != 'menu' ? 'main' : 'drawer'
       }
 
     });
