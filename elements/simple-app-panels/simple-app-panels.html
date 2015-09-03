@@ -1,8 +1,9 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../simple-observable-behavior/simple-observable-behavior.html">
 
 <!--
-`simple-navigation` contains a drawer panel and a main panel.  The drawer
+`simple-app-panels` contains a drawer panel and a main panel.  The drawer
 and the main panel are side-by-side with drawer on the left. The drawer will slide out to reveal an expanded version of its contents.
 
 Use the attribute `drawer` to indicate that the element is the drawer panel and
@@ -10,32 +11,32 @@ Use the attribute `drawer` to indicate that the element is the drawer panel and
 
 Example:
 
-    <simple-navigation>
+    <simple-app-panels>
       <div drawer> Drawer panel... </div>
       <div main> Main panel... </div>
-    </simple-navigation>
+    </simple-app-panels>
 
-Styling `simple-navigation`
+Styling `simple-app-panels`
 
 To change the main container:
 
-    simple-navigation {
-      --simple-navigation-main-container: {
+    simple-app-panels {
+      --simple-app-panels-main-container: {
         background-color: gray;
       };
     }
 
 To change the drawer container when it's in the left side:
 
-    simple-navigation {
-      --simple-navigation-left-drawer-container: {
+    simple-app-panels {
+      --simple-app-panels-left-drawer-container: {
         background-color: white;
       };
     }
 -->
 
-<dom-module id="simple-navigation">
-  <link rel="import" type="css" href="simple-navigation.css">
+<dom-module id="simple-app-panels">
+  <link rel="import" type="css" href="simple-app-panels.css">
 
   <template>
     <!-- activate-event is used because we don't fire 'tap' events to change selection. -->
@@ -65,7 +66,7 @@ To change the drawer container when it's in the left side:
 
     Polymer({
 
-      is: 'simple-navigation',
+      is: 'simple-app-panels',
       properties: {
 
         /**
@@ -98,8 +99,11 @@ To change the drawer container when it's in the left side:
       },
 
       _computeInternalSelected: function(selected) {
+        this.menuSelectionFire(this.selected == 'menu');
         return this.selected != 'menu' ? 'main' : 'drawer'
-      }
+      },
+
+      behaviors: [ Polymer.SimpleObservableBehavior("menuSelection") ],
     });
 
   }());

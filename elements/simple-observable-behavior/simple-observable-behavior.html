@@ -1,0 +1,54 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<script>
+Polymer.SimpleObservableBehavior = function(eventType){
+
+  return {
+    // Verified: you can have multiple listeners on the same event.
+    listeners: {
+      'simple-add-observer-event': '_add' + eventType + 'Observer',
+      'simple-remove-observer-event': '_remove' + eventType + 'Observer'
+    },
+
+    // Only lifecycle events don't get overriden, so we have to define specific properties in our
+    // created lifecycle event.
+    created: function() {
+      // Define Observers Property.
+      this[eventType + 'Observers'] = [];
+
+      // Define event firing property for element access. Elements will call "this.whateverFire" to
+      // fire the event.
+      this[eventType + 'Fire'] = function(detail) {
+        this[eventType + 'Observers'].forEach(function(observer) {
+          observer[eventType + 'Fired'](detail);
+        });
+      };
+
+      // Define an addObserver function for the eventType.
+      this['_add' + eventType + 'Observer'] = function(event) {
+        if (event.detail != eventType) {
+          return;
+        }
+        var target = event.target;
+        if (this[eventType + 'Observers'].indexOf(target) === -1) {
+          this[eventType + 'Observers'].push(target);
+        }
+        event.stopPropagation();
+      };
+
+      // Define a removeObserver function for the eventType.
+      this['_remove' + eventType + 'Observer'] = function(event) {
+        if (event.detail != eventType) {
+          return;
+        }
+        var target = event.target;
+        var index = this[eventType + 'Observers'].indexOf(target);
+        if (index > -1) {
+          this[eventType + 'Observers'].splice(index, 1);
+        }
+        event.stopPropagation();
+      };
+    }
+  }
+}
+</script>

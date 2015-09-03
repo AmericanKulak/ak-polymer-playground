@@ -1,0 +1,33 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<script>
+Polymer.SimpleObserverBehavior = function(eventType) {
+  // Only lifecycle events don't get overriden, so we have to define specific properties in our
+  // created lifecycle event.
+  return {
+    created: function() {
+      this[eventType + 'Fired'] = function(detail) {
+        if(typeof this[eventType + 'Handler'] === 'function') {
+          this[eventType + 'Handler'](detail);
+        }
+      }
+    },
+
+    attached: function() {
+      this.fire('simple-add-observer-event', eventType, {
+        node: this,
+        bubbles: true,
+        cancelable: true
+      });
+    },
+
+    detached: function() {
+      this.fire('simple-remove-observer-event', eventType, {
+        node: this,
+        bubbles: true,
+        cancelable: true
+      });
+    }
+  }
+}
+</script>

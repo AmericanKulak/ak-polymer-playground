@@ -59,7 +59,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <span id="browser-sync-binding"></span>
   <template is="dom-bind" id="app">
 
-    <simple-navigation id="simpleNavigation" selected="{{route}}">
+    <simple-app-panels id="simpleNavigation" selected="{{route}}">
       <!-- Drawer Scroll Header Panel -->
       <simple-navigation-menu drawer fixed class="list" attr-for-selected="data-route" selected="{{route}}">
         <a data-route="menu" href="/">
@@ -150,7 +150,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </iron-pages>
         </div>
       </paper-scroll-header-panel>
-    </simple-navigation>
+    </simple-app-panels>
   </template>
 
   <!-- build:js scripts/app.js -->
