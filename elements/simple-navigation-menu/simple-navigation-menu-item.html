@@ -1,0 +1,67 @@
+<link rel="import" href="../simple-observable-behavior/simple-observer-behavior.html">
+
+<dom-module id="simple-navigation-menu-item">
+  <style>
+    :host {
+      display: block;
+      position: relative;
+      overflow: hidden;
+
+
+      font-family: Candal;
+      font-size: 40px;
+      line-height: 40px;
+
+      /* Center within and fill container */
+      margin: auto;
+      flex: 1 1 auto;
+
+      /* Used to center menu links */
+      display:flex;
+    }
+
+    :host.small > #itemContents {
+      transform: rotate(-90deg);
+    }
+
+    #itemContents {
+      /* Used to center menu links */
+      margin: auto;
+      transition: all ease-in-out 0.3s;
+    }
+
+    :host.iron-selected > #itemContents {
+      font-weight: bold;
+    }
+  </style>
+  <template>
+    <div id="itemContents">
+      <content></content>
+    </div>
+  </template>
+</dom-module>
+<script>
+(function(){
+
+  'use strict';
+
+  Polymer({
+    is: "simple-navigation-menu-item",
+
+    behaviors: [
+      Polymer.SimpleObserverBehavior("menuSelection")
+    ],
+
+    menuSelectionHandler: function(menuSelected) {
+      console.log("Menu has been selected:" + menuSelected)
+      if (!menuSelected) {
+        this.classList.add("small");
+      } else {
+        this.classList.remove("small");
+      }
+    }
+  });
+
+})();
+
+</script>

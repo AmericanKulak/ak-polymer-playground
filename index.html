@@ -53,6 +53,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <!-- will be replaced with elements/elements.vulcanized.html -->
   <link rel="import" href="elements/elements.html">
   <!-- endreplace-->
+
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Candal">
 </head>
 
 <body unresolved class="fullbleed layout vertical">
@@ -62,24 +64,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <simple-app-panels id="simpleNavigation" selected="{{route}}">
       <!-- Drawer Scroll Header Panel -->
       <simple-navigation-menu drawer fixed class="list" attr-for-selected="data-route" selected="{{route}}">
-        <a data-route="menu" href="/">
-          <iron-icon icon="menu"></iron-icon>
-          <span>Menu</span>
-        </a>
+        <simple-navigation-menu-item data-route="menu">
+          <a href="/">
+            <span>MENU</span>
+          </a>
+        </simple-navigation-menu-item>
 
-        <a data-route="users" href="/users">
-          <iron-icon icon="info"></iron-icon>
-          <span>Users</span>
-        </a>
 
-        <a data-route="contact" href="/contact">
-          <iron-icon icon="mail"></iron-icon>
-          <span>Contact</span>
-        </a>
-        <a data-route="home" href="/home">
-          <iron-icon icon="mail"></iron-icon>
-          <span>Home</span>
-        </a>
+        <simple-navigation-menu-item data-route="users" >
+          <a href="/users">
+            <span>USERS</span>
+          </a>
+        </simple-navigation-menu-item>
+
+
+        <simple-navigation-menu-item data-route="contact">
+          <a href="/contact">
+            <span>CONTACT</span>
+          </a>
+        </simple-navigation-menu-item>
+
+
+        <simple-navigation-menu-item data-route="home">
+          <a  href="/home">
+            <span>HOME</span>
+          </a>
+        </simple-navigation-menu-item>
       </simple-navigation-menu>
 
       <!-- Main Area -->
